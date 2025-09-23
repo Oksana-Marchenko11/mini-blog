@@ -3,7 +3,9 @@ import { createUser, loginUser } from "../services/userService.js";
 export async function registerController(req, res) {
   try {
     const user = await createUser(req.body);
-    res.status(201).json(user);
+    const userObj = user.toObject();
+    const { password, ...userSafe } = userObj;
+    res.status(201).json(userSafe);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

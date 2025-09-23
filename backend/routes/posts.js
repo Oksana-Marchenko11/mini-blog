@@ -1,8 +1,14 @@
-// import express from "express";
+import express from "express";
+import {
+  getAllPostsController,
+  createPostController,
+  getPostByIdController,
+} from "../controllers/posts.js";
 
-// const postRoutes = express.Router();
+const postRoutes = express.Router();
 
-// postRoutes.get("/");
-// postRoutes.post("/");
+postRoutes.get("/", getAllPostsController);
+postRoutes.post("/", createPostController);
+postRoutes.get("/:id", getPostByIdController);
 
-// export default postRoutes;
+export default postRoutes;

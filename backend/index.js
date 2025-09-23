@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import authRoutes from "./routes/auth.js";
-// import postRoutes from "./routes/posts.js";
+import postRoutes from "./routes/posts.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -11,6 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/posts", postRoutes);
 
 mongoose
   .connect(process.env.DB_HOST)
@@ -21,5 +22,5 @@ mongoose
   })
   .catch((error) => {
     console.log(error.message);
-    process.exit(1); // закриває всі запущені фонові процеси
+    process.exit(1);
   });
