@@ -10,7 +10,11 @@ const PostsListPage = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/posts");
+      const response = await fetch("http://localhost:3000/api/posts", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       if (!response.ok) throw new Error(`Помилка: ${response.status}`);
       const data = await response.json();
       setPosts(data);

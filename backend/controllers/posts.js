@@ -1,13 +1,14 @@
 import {
   createPost,
-  getAllPosts,
+  getAllUsersPosts,
   getPostById,
   deleteById,
 } from "../services/postsService.js";
 
 export async function createPostController(req, res) {
   try {
-    const { title, content, author } = req.body;
+    const author = req.user._id;
+    const { title, content } = req.body;
     const post = await createPost({ title, content, author });
     res.status(201).json(post);
   } catch (err) {
@@ -15,9 +16,10 @@ export async function createPostController(req, res) {
   }
 }
 
-export async function getAllPostsController(req, res) {
+export async function getAllUsersPostsController(req, res) {
   try {
-    const posts = await getAllPosts();
+    const userId = req.user._id;
+    const posts = await getAllUsersPosts(userId);
     res.json(posts);
   } catch (err) {
     res.status(500).json({ error: err.message });

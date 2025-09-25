@@ -5,8 +5,8 @@ export async function createPost({ title, content, author }) {
   await post.save();
   return post;
 }
-export async function getAllPosts() {
-  const posts = await Post.find();
+export async function getAllUsersPosts(userId) {
+  const posts = await Post.find({ author: userId });
   return posts;
 }
 
