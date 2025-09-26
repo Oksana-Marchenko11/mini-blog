@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button, Card } from "react-bootstrap";
 
 const PostsListPage = () => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchPosts();
@@ -38,30 +41,50 @@ const PostsListPage = () => {
   };
 
   return (
-    <div style={{ maxWidth: 800, margin: "0 auto" }}>
-      <h2>Список постів</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {posts.length === 0 && <p>Пости відсутні</p>}
-      <ul style={{ listStyle: "none", padding: 0 }}>
-        {posts.map((post) => (
-          <li
-            key={post._id}
-            style={{ border: "1px solid #ccc", padding: 12, marginBottom: 12 }}
-          >
-            <h3>{post.title}</h3>
-            <p>{post.content}</p>
-            <small>Створено: {new Date(post.createdAt).toLocaleString()}</small>
-            <br />
-            <button
-              onClick={() => handleDelete(post._id)}
-              style={{ marginTop: 6, color: "red" }}
-            >
-              Видалити
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <div style={{ maxWidth: 800, margin: "0 auto" }}>
+        <h2>Список постів</h2>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        {posts.length === 0 && <p>Пости відсутні</p>}
+        <ul
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+            gap: "12px",
+            padding: 0,
+          }}
+        >
+          {posts.map((post) => (
+            <li key={post._id}>
+              <Card style={{ marginBottom: 12 }}>
+                <Card.Body>
+                  <Card.Title>{post.title}</Card.Title>
+                  <Card.Text>{post.content}</Card.Text>
+                  <small>
+                    Створено: {new Date(post.createdAt).toLocaleString()}
+                  </small>
+                  <br />
+                  <Button
+                    variant="danger"
+                    onClick={() => handleDelete(post._id)}
+                    style={{ marginTop: 6 }}
+                  >
+                    Видалити
+                  </Button>
+                </Card.Body>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <Button
+        onClick={() => navigate("/create-post")}
+        className="btn btn-success"
+        style={{ margin: 6 }}
+      >
+        Створити новий пост
+      </Button>
+    </>
   );
 };
 

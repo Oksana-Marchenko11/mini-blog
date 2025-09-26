@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreatePostPage = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [error, setError] = useState(null);
@@ -30,6 +32,7 @@ const CreatePostPage = () => {
       setSuccess(true);
       setTitle("");
       setContent("");
+      navigate("/posts");
     } catch (err) {
       console.error(err);
       setError(err.message);
