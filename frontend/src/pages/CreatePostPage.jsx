@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styles from "./CreatePostPage.module.css";
+import { Container, Form, Button, Alert } from "react-bootstrap";
 
 const CreatePostPage = () => {
   const navigate = useNavigate();
@@ -40,31 +42,37 @@ const CreatePostPage = () => {
   };
 
   return (
-    <div style={{ maxWidth: 600, margin: "0 auto" }}>
-      <h2>Створити пост</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {success && <p style={{ color: "green" }}>Пост успішно створено!</p>}
-      <form
-        onSubmit={handleSubmit}
-        style={{ display: "flex", flexDirection: "column", gap: 12 }}
-      >
-        <input
-          type="text"
-          placeholder="Заголовок"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-        <textarea
-          placeholder="Текст поста"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          required
-          rows={6}
-        />
-        <button type="submit">Створити пост</button>
-      </form>
-    </div>
+    <Container className="my_container">
+      <h2 className="mb-4">Створити пост</h2>
+      {error && <Alert variant="danger">{error}</Alert>}
+      {success && <Alert variant="success">Пост успішно створено!</Alert>}
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3" controlId="formTitle">
+          <Form.Label>Заголовок</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Введіть заголовок"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formContent">
+          <Form.Label>Текст поста</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={6}
+            placeholder="Введіть текст поста"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Button variant="success" type="submit">
+          Створити пост
+        </Button>
+      </Form>
+    </Container>
   );
 };
 

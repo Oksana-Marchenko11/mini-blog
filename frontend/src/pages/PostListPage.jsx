@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Row, Col, Container } from "react-bootstrap";
 
 const PostsListPage = () => {
   const [posts, setPosts] = useState([]);
@@ -41,50 +41,43 @@ const PostsListPage = () => {
   };
 
   return (
-    <>
-      <div style={{ maxWidth: 800, margin: "0 auto" }}>
-        <h2>Список постів</h2>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {posts.length === 0 && <p>Пости відсутні</p>}
-        <ul
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-            gap: "12px",
-            padding: 0,
-          }}
-        >
-          {posts.map((post) => (
-            <li key={post._id}>
-              <Card style={{ marginBottom: 12 }}>
-                <Card.Body>
-                  <Card.Title>{post.title}</Card.Title>
-                  <Card.Text>{post.content}</Card.Text>
-                  <small>
-                    Створено: {new Date(post.createdAt).toLocaleString()}
-                  </small>
-                  <br />
-                  <Button
-                    variant="danger"
-                    onClick={() => handleDelete(post._id)}
-                    style={{ marginTop: 6 }}
-                  >
-                    Видалити
-                  </Button>
-                </Card.Body>
-              </Card>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <Button
-        onClick={() => navigate("/create-post")}
-        className="btn btn-success"
-        style={{ margin: 6 }}
-      >
-        Створити новий пост
-      </Button>
-    </>
+    <Container>
+      <Row className="align-items-center mb-4">
+        <Col>
+          <h2>Список постів</h2>
+        </Col>
+        <Col className="text-end">
+          <Button onClick={() => navigate("/create-post")} variant="success">
+            Створити новий пост
+          </Button>
+        </Col>
+      </Row>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {posts.length === 0 && <p>Пости відсутні</p>}
+      <Row xs={1} md={2} lg={3} className="g-4">
+        {posts.map((post) => (
+          <Col key={post._id}>
+            <Card style={{ marginBottom: 12 }}>
+              <Card.Body>
+                <Card.Title>{post.title}</Card.Title>
+                <Card.Text>{post.content}</Card.Text>
+                <small>
+                  Створено: {new Date(post.createdAt).toLocaleString()}
+                </small>
+                <br />
+                <Button
+                  variant="danger"
+                  onClick={() => handleDelete(post._id)}
+                  style={{ marginTop: 6 }}
+                >
+                  Видалити
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </Container>
   );
 };
 

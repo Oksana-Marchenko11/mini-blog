@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Container, Form, Button, Alert } from "react-bootstrap";
 
 const LoginPage = () => {
   const [error, setError] = useState(null);
@@ -38,24 +39,37 @@ const LoginPage = () => {
     }
   };
   return (
-    <div>
-      <h2>Логін</h2>
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          maxWidth: 400,
-          margin: "0 auto",
-          display: "flex",
-          flexDirection: "column",
-          gap: 12,
-        }}
-      >
-        <input type="email" name="email" placeholder="Email" required />
-        <input type="password" name="password" placeholder="Пароль" required />
-        <button type="submit">Увійти</button>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-      </form>
-    </div>
+    <Container className="my_container">
+      <h2 className="mb-4">Логін</h2>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3" controlId="formEmail">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formPassword">
+          <Form.Label>Пароль</Form.Label>
+          <Form.Control
+            type="password"
+            name="password"
+            placeholder="Пароль"
+            required
+          />
+        </Form.Group>
+        <Button variant="success" type="submit" className="w-100 mb-2">
+          Увійти
+        </Button>
+        {error && (
+          <Alert variant="danger" className="mt-2">
+            {error}
+          </Alert>
+        )}
+      </Form>
+    </Container>
   );
 };
 export default LoginPage;

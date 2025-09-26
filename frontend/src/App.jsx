@@ -3,6 +3,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import PostListPage from "./pages/PostListPage";
 import CreatePostPage from "./pages/CreatePostPage";
+import "./App.css";
 
 function App() {
   return (
