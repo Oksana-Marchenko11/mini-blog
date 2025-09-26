@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy_FrontEnd
 
 on:
   push:
@@ -10,10 +10,6 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: frontend
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -22,16 +18,17 @@ jobs:
         uses: actions/setup-node@v3
 
       - name: Install dependencies
-        uses: bahmutov/npm-install@v1
+        run: npm install
+        working-directory: frontend
 
       - name: Build project
         run: npm run build
-
+        working-directory: frontend
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v4
         with:
           name: production-files
-          path: ./frontend/dist
+          path: frontend/dist
 
   deploy:
     name: Deploy
