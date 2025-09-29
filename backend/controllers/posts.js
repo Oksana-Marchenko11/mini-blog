@@ -1,6 +1,7 @@
 import {
   createPost,
   getAllUsersPosts,
+  getAllPosts,
   getPostById,
   deleteById,
 } from "../services/postsService.js";
@@ -20,6 +21,15 @@ export async function getAllUsersPostsController(req, res) {
   try {
     const userId = req.user._id;
     const posts = await getAllUsersPosts(userId);
+    res.json(posts);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+export async function getAllPostsController(req, res) {
+  try {
+    const posts = await getAllPosts();
     res.json(posts);
   } catch (err) {
     res.status(500).json({ error: err.message });

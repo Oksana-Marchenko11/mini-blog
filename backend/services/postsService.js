@@ -9,6 +9,10 @@ export async function getAllUsersPosts(userId) {
   const posts = await Post.find({ author: userId });
   return posts;
 }
+export async function getAllPosts() {
+  const posts = await Post.find();
+  return posts;
+}
 
 export async function getPostById(postId) {
   const onePost = await Post.findById(postId);

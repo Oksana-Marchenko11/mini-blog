@@ -44,6 +44,9 @@ const PostsListPage = () => {
     <Container>
       <Row className="align-items-center mb-4">
         <Col>
+          <h1 className="display-4 mb-4 text-dark">
+            Ласкаво просимо до MiniBlog
+          </h1>
           <h2>Список постів</h2>
         </Col>
         <Col className="text-end">

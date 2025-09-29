@@ -9,9 +9,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<PostListPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/posts" element={<PostListPage />} />
         <Route path="/create-post" element={<CreatePostPage />} />
       </Routes>
     </BrowserRouter>
