@@ -1,15 +1,11 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button, Card, Row, Col, Container } from "react-bootstrap";
 
 const PostsListPage = () => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  const [showPosts, setShowPosts] = useState(false);
 
   const fetchPosts = async () => {
     try {
@@ -21,6 +17,7 @@ const PostsListPage = () => {
       if (!response.ok) throw new Error(`Помилка: ${response.status}`);
       const data = await response.json();
       setPosts(data);
+      setShowPosts(true);
     } catch (err) {
       console.error(err);
       setError(err.message);
@@ -42,44 +39,54 @@ const PostsListPage = () => {
 
   return (
     <Container>
-      <Row className="align-items-center mb-4">
-        <Col>
-          <h1 className="display-4 mb-4 text-dark">
-            Ласкаво просимо до MiniBlog
-          </h1>
-          <h2>Список постів</h2>
-        </Col>
-        <Col className="text-end">
-          <Button onClick={() => navigate("/create-post")} variant="success">
-            Створити новий пост
-          </Button>
-        </Col>
-      </Row>
+      <h1 className="display-4 mb-4 text-center">
+        Ласкаво просимо до MiniBlog
+      </h1>
+      <p className="lead mb-4 text-center">
+        Діліться своїми думками та ідеями з світом
+      </p>
+      <div className="d-flex gap-3 justify-content-center flex-wrap">
+        <Link to="/register" className="btn btn-primary btn-lg">
+          Приєднатися
+        </Link>
+        <Link to="/login" className="btn btn-primary btn-lg">
+          Увійти
+        </Link>
+      </div>
+      <div className="text-center mt-5">
+        <Button className="btn btn-primary btn-lg" onClick={fetchPosts}>
+          Переглянути всі пости
+        </Button>
+      </div>
       {error && <p style={{ color: "red" }}>{error}</p>}
-      {posts.length === 0 && <p>Пости відсутні</p>}
-      <Row xs={1} md={2} lg={3} className="g-4">
-        {posts.map((post) => (
-          <Col key={post._id}>
-            <Card style={{ marginBottom: 12 }}>
-              <Card.Body>
-                <Card.Title>{post.title}</Card.Title>
-                <Card.Text>{post.content}</Card.Text>
-                <small>
-                  Створено: {new Date(post.createdAt).toLocaleString()}
-                </small>
-                <br />
-                <Button
-                  variant="danger"
-                  onClick={() => handleDelete(post._id)}
-                  style={{ marginTop: 6 }}
-                >
-                  Видалити
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+      {showPosts && (
+        <>
+          {posts.length === 0 && <p>Пости відсутні</p>}
+          <Row xs={1} md={2} lg={3} className="g-4">
+            {posts.map((post) => (
+              <Col key={post._id}>
+                <Card style={{ marginBottom: 12 }}>
+                  <Card.Body>
+                    <Card.Title>{post.title}</Card.Title>
+                    <Card.Text>{post.content}</Card.Text>
+                    <small>
+                      Створено: {new Date(post.createdAt).toLocaleString()}
+                    </small>
+                    <br />
+                    <Button
+                      variant="danger"
+                      onClick={() => handleDelete(post._id)}
+                      style={{ marginTop: 6 }}
+                    >
+                      Видалити
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </>
+      )}
     </Container>
   );
 };
