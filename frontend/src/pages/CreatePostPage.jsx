@@ -16,14 +16,17 @@ const CreatePostPage = () => {
     setSuccess(false);
 
     try {
-      const response = await fetch("http://localhost:3000/api/posts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({ title, content }),
-      });
+      const response = await fetch(
+        "https://mbapi.oksi.pp.ua/api/posts/my-posts",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({ title, content }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`Помилка: ${response.status}`);
@@ -34,7 +37,7 @@ const CreatePostPage = () => {
       setSuccess(true);
       setTitle("");
       setContent("");
-      navigate("/posts");
+      navigate("/my-posts");
     } catch (err) {
       console.error(err);
       setError(err.message);

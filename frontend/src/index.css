@@ -11,7 +11,7 @@ body {
   /* горизонтальне центрування */
   align-items: center;
   /* вертикальне центрування */
-  background-color: #1b77a2f9;
+  /* background-color: #f4f275f9; */
   /* фон сторінки */
   font-family: Arial, sans-serif;
   /* шрифт за замовчуванням */
@@ -19,7 +19,6 @@ body {
 
 .app_root {
   width: 100%;
-  max-width: 1200px;
   min-height: 100vh;
   margin: 0 auto;
   /* горизонтальне центрування */

@@ -18,8 +18,12 @@ export async function createPostController(req, res) {
 }
 
 export async function getAllUsersPostsController(req, res) {
+  console.log("✅ getAllUsersPostsController called");
+  console.log("req.user:", req.user);
   try {
+    console.log("aaa");
     const userId = req.user._id;
+    console.log(userId);
     const posts = await getAllUsersPosts(userId);
     res.json(posts);
   } catch (err) {

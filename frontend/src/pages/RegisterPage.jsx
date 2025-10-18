@@ -13,7 +13,7 @@ const RegisterPage = () => {
     };
     console.log("Register data:", formData);
     console.log(JSON.stringify(formData));
-    fetch("http://localhost:3000/api/auth/register", {
+    fetch("https://mbapi.oksi.pp.ua/api/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
