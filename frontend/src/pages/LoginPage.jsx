@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Form, Button, Alert } from "react-bootstrap";
+import { API_BASE } from "../../config";
 
 const LoginPage = () => {
   const [error, setError] = useState(null);
@@ -13,7 +14,7 @@ const LoginPage = () => {
       password: form.password.value,
     };
     try {
-      const response = await fetch("https://mbapi.oksi.pp.ua/api/auth/login", {
+      const response = await fetch(`${API_BASE}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

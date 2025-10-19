@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./CreatePostPage.module.css";
+// import styles from "./CreatePostPage.module.css";
 import { Container, Form, Button, Alert } from "react-bootstrap";
+import { API_BASE } from "../../config";
 
 const CreatePostPage = () => {
   const navigate = useNavigate();
@@ -16,17 +17,14 @@ const CreatePostPage = () => {
     setSuccess(false);
 
     try {
-      const response = await fetch(
-        "https://mbapi.oksi.pp.ua/api/posts/my-posts",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify({ title, content }),
-        }
-      );
+      const response = await fetch(`${API_BASE}/api/posts/my-posts`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({ title, content }),
+      });
 
       if (!response.ok) {
         throw new Error(`Помилка: ${response.status}`);

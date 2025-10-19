@@ -1,22 +1,20 @@
 import { useEffect, useState } from "react";
 import { Posts } from "../components/Posts";
+import { API_BASE } from "../../config";
 
 const MyPostsPage = () => {
   const [myPosts, setmyPosts] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    console.log("aaaaaaaaaaaaa");
     const fetchPosts = async () => {
       try {
-        const response = await fetch(
-          "https://mbapi.oksi.pp.ua/api/posts/my-posts",
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
+        const response = await fetch(`${API_BASE}/api/posts/my-posts`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+
         console.log("TOKEN:", localStorage.getItem("token"));
         if (!response.ok) throw new Error(`Помилка: ${response.status}`);
         const data = await response.json();

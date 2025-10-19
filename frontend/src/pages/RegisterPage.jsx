@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Container, Form, Button, Alert } from "react-bootstrap";
+import { API_BASE } from "../../config";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const RegisterPage = () => {
     };
     console.log("Register data:", formData);
     console.log(JSON.stringify(formData));
-    fetch("https://mbapi.oksi.pp.ua/api/auth/register", {
+    fetch(`${API_BASE}/api/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

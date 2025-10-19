@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, Card, Row, Col, Container } from "react-bootstrap";
 import "./HomePage.css";
 import { Posts } from "../components/Posts";
+import { API_BASE } from "../../config";
 
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
@@ -10,7 +11,7 @@ const HomePage = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await fetch("https://mbapi.oksi.pp.ua/api/posts", {
+      const response = await fetch(`${API_BASE}/api/posts/all-posts`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -28,7 +29,7 @@ const HomePage = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`https://mbapi.oksi.pp.ua/api/posts/${id}`, {
+      const response = await fetch(`${API_BASE}/api/posts/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
