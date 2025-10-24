@@ -2,18 +2,29 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import "./Header.css";
+import { jwtDecode } from "jwt-decode";
 
-export const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+export const Header = ({ isLoggedIn, setIsLoggedIn }) => {
+  const [username, setUsername] = useState("");
 
+  const checkLogin = () => {
+    try {
+      const token = localStorage.getItem("token");
+      const decoded = jwtDecode(token);
+      setUsername(decoded.username || "");
+    } catch {
+      setUsername("");
+    }
+  };
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-  }, []);
+    checkLogin();
+  }, [isLoggedIn]);
 
   const logout = () => {
     localStorage.removeItem("token");
+    window.dispatchEvent(new Event("storage"));
     setIsLoggedIn(false);
+    setUsername("");
   };
 
   return (
@@ -28,6 +39,7 @@ export const Header = () => {
             <Nav.Link as={Link} to="/">
               Home
             </Nav.Link>
+
             {isLoggedIn ? (
               <>
                 <Nav.Link as={Link} to="/create-post">
@@ -49,11 +61,14 @@ export const Header = () => {
             )}
           </Nav>
 
-          {isLoggedIn && (
-            <Button variant="outline-light" onClick={logout}>
-              Logout
-            </Button>
-          )}
+          {isLoggedIn ? (
+            <>
+              <span className="me-3 text-light">👋 Hi, {username}</span>
+              <Button variant="outline-light" onClick={logout}>
+                Logout
+              </Button>
+            </>
+          ) : null}
         </Navbar.Collapse>
       </Container>
     </Navbar>

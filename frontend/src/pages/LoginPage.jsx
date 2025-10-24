@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { API_BASE } from "../../config";
 
-const LoginPage = () => {
+const LoginPage = ({ setIsLoggedIn }) => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -30,6 +30,8 @@ const LoginPage = () => {
       console.log("Login success:", data);
 
       localStorage.setItem("token", data.token);
+      setIsLoggedIn(true);
+      // window.dispatchEvent(new Event("storage"));
 
       navigate("/");
 
