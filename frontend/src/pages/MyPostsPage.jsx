@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Posts } from "../components/Posts";
+import { EditPostModal } from "../components/EditPostModal";
 import { fetchMyPosts, deleteMyPost, editMyPost } from "../api/posts";
 
 const MyPostsPage = () => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState("");
+  const [editingPost, setEditingPost] = useState(null);
 
   const loadPosts = async () => {
     try {
@@ -45,11 +47,22 @@ const MyPostsPage = () => {
       console.log(posts);
     }
   };
-
   return (
     <div>
       {error && <p style={{ color: "red" }}>{error}</p>}
-      <Posts posts={posts} onDelete={handleDelete} onEdit={handleEdit} />
+      <Posts
+        posts={posts}
+        onDelete={handleDelete}
+        onEdit={(post) => setEditingPost(post)}
+      />
+      {editingPost && (
+        <EditPostModal
+          show={!!editingPost}
+          post={editingPost}
+          onHide={() => setEditingPost(null)}
+          onSave={handleEdit}
+        />
+      )}
     </div>
   );
 };
