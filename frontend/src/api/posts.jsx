@@ -1,7 +1,4 @@
-// src/api/posts.jsx
 import { API_BASE } from "../../config";
-console.log(API_BASE);
-// Всі пости
 
 export const fetchAllPosts = async () => {
   try {
@@ -42,10 +39,10 @@ export const fetchMyPosts = async () => {
   return res.json();
 };
 
-// Редагування поста
-export const editMyPost = async (id, data, token) => {
-  const res = await fetch(`${API_BASE}/api/posts/${id}`, {
-    method: "PUT",
+export const editMyPost = async (id, data) => {
+  const token = localStorage.getItem("token");
+  const res = await fetch(`${API_BASE}/api/posts/my-posts/${id}`, {
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,

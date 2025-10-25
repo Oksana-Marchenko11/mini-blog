@@ -4,6 +4,7 @@ import {
   getAllPosts,
   getPostById,
   deleteById,
+  editMyPost,
 } from "../services/postsService.js";
 
 export async function createPostController(req, res) {
@@ -60,6 +61,24 @@ export async function deletePostByIdController(req, res) {
       return res.status(404).json({ error: "Post not found" });
     }
     res.json({ message: "Post deleted successfully!!!" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+export async function updatePostByIdController(req, res) {
+  try {
+    const { id } = req.params;
+    const updates = req.body; // title і/або content
+
+    const post = await getPostById(id);
+    if (!post) return res.status(404).json({ error: "Post not found" });
+    if (post.author.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ error: "Not authorized" });
+    }
+
+    const updatedPost = await editMyPost(id, updates);
+    res.json(updatedPost);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

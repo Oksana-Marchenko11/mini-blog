@@ -30,6 +30,7 @@ const MyPostsPage = () => {
   };
 
   const handleEdit = async (post) => {
+    console.log(post);
     const newTitle = prompt("Новий заголовок:", post.title);
     const newContent = prompt("Новий текст:", post.content);
     if (newTitle && newContent) {
@@ -41,6 +42,7 @@ const MyPostsPage = () => {
             : p
         )
       );
+      console.log(posts);
     }
   };
 

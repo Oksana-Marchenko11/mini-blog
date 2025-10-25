@@ -23,3 +23,7 @@ export async function deleteById(postId) {
   const deletedPost = await Post.deleteOne({ _id: postId });
   return deletedPost;
 }
+export const editMyPost = async (id, data) => {
+  // findByIdAndUpdate з {new: true} поверне оновлений документ
+  return await Post.findByIdAndUpdate(id, data, { new: true });
+};

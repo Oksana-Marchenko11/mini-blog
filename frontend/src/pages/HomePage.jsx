@@ -7,8 +7,6 @@ const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState("");
 
-  // const token = localStorage.getItem("token");
-
   const loadPosts = async () => {
     try {
       const data = await fetchAllPosts();
