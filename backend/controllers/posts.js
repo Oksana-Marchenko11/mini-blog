@@ -56,10 +56,10 @@ export async function deletePostByIdController(req, res) {
   try {
     const { id } = req.params;
     const result = await deleteById(id);
-    if (result.deletedCount === 0) {
+    if (!result) {
       return res.status(404).json({ error: "Post not found" });
     }
-    res.json({ message: "Post deleted successfully" });
+    res.json({ message: "Post deleted successfully!!!" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

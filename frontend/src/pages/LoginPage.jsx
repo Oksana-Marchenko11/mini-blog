@@ -34,8 +34,6 @@ const LoginPage = ({ setIsLoggedIn }) => {
       // window.dispatchEvent(new Event("storage"));
 
       navigate("/");
-
-      alert(`Вітаю, ${data.user.username}! Ви успішно увійшли.`);
     } catch (err) {
       console.error("Login error:", err);
       setError("Невірний email або пароль");

@@ -1,37 +1,53 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Posts } from "../components/Posts";
-import { API_BASE } from "../../config";
+import { fetchMyPosts, deleteMyPost, editMyPost } from "../api/posts";
 
 const MyPostsPage = () => {
-  const [myPosts, setmyPosts] = useState([]);
-  const [error, setError] = useState(null);
+  const [posts, setPosts] = useState([]);
+  const [error, setError] = useState("");
+
+  const loadPosts = async () => {
+    try {
+      const data = await fetchMyPosts();
+      console.log(data);
+      setPosts(data);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await fetch(`${API_BASE}/api/posts/my-posts`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-
-        console.log("TOKEN:", localStorage.getItem("token"));
-        if (!response.ok) throw new Error(`Помилка: ${response.status}`);
-        const data = await response.json();
-        console.log(data);
-        setmyPosts(data);
-      } catch (err) {
-        setError(err.message);
-      }
-    };
-    fetchPosts();
+    loadPosts();
   }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteMyPost(id);
+      setPosts(posts.filter((p) => p._id !== id));
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleEdit = async (post) => {
+    const newTitle = prompt("Новий заголовок:", post.title);
+    const newContent = prompt("Новий текст:", post.content);
+    if (newTitle && newContent) {
+      await editMyPost(post._id, { title: newTitle, content: newContent });
+      setPosts(
+        posts.map((p) =>
+          p._id === post._id
+            ? { ...p, title: newTitle, content: newContent }
+            : p
+        )
+      );
+    }
+  };
 
   return (
     <div>
-      <h2>Мої пости</h2>
       {error && <p style={{ color: "red" }}>{error}</p>}
-      <Posts posts={myPosts} />
+      <Posts posts={posts} onDelete={handleDelete} onEdit={handleEdit} />
     </div>
   );
 };
