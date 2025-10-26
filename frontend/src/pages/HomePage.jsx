@@ -34,8 +34,6 @@ const HomePage = () => {
           Увійти
         </Link>
       </div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <Posts posts={posts} />
       <div className="card shadow-sm mt-4">
         <div className="card-body p-4">
           <h2 className="text-center mb-4">Можливості MiniBlog</h2>
@@ -68,6 +66,8 @@ const HomePage = () => {
           Перегляд усіх постів
         </Button>
       </div>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      <Posts posts={posts} />
     </Container>
   );
 };
