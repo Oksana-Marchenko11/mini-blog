@@ -28,7 +28,7 @@ export const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   };
 
   return (
-    <Navbar expand="lg" className="navbar_custom" variant="dark">
+    <Navbar bg="primary" variant="dark" expand="lg" className="mb-4">
       <Container>
         <Navbar.Brand as={Link} to="/">
           MiniBlog
