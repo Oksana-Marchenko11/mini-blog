@@ -62,7 +62,7 @@ const HomePage = () => {
         </div>
       </div>
       <div className="text-center mt-5">
-        <Button className="btn btn-primary btn-lg" onClick={loadPosts}>
+        <Button className="btn btn-primary btn-lg mb-4" onClick={loadPosts}>
           Перегляд усіх постів
         </Button>
       </div>
