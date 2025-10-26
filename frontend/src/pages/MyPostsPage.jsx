@@ -11,7 +11,6 @@ const MyPostsPage = () => {
   const loadPosts = async () => {
     try {
       const data = await fetchMyPosts();
-      console.log(data);
       setPosts(data);
     } catch (err) {
       setError(err.message);
@@ -25,28 +24,33 @@ const MyPostsPage = () => {
   const handleDelete = async (id) => {
     try {
       await deleteMyPost(id);
-      setPosts(posts.filter((p) => p._id !== id));
+      setPosts((prev) => prev.filter((p) => p._id !== id));
     } catch (err) {
       setError(err.message);
     }
   };
 
-  const handleEdit = async (post) => {
-    console.log(post);
-    const newTitle = prompt("Новий заголовок:", post.title);
-    const newContent = prompt("Новий текст:", post.content);
-    if (newTitle && newContent) {
-      await editMyPost(post._id, { title: newTitle, content: newContent });
-      setPosts(
-        posts.map((p) =>
-          p._id === post._id
-            ? { ...p, title: newTitle, content: newContent }
+  const handleEdit = async (updatedPost) => {
+    try {
+      await editMyPost(updatedPost._id, {
+        title: updatedPost.title,
+        content: updatedPost.content,
+      });
+
+      setPosts((prev) =>
+        prev.map((p) =>
+          p._id === updatedPost._id
+            ? { ...p, title: updatedPost.title, content: updatedPost.content }
             : p
         )
       );
-      console.log(posts);
+
+      setEditingPost(null);
+    } catch (err) {
+      setError(err.message);
     }
   };
+
   return (
     <div>
       {error && <p style={{ color: "red" }}>{error}</p>}
@@ -55,6 +59,7 @@ const MyPostsPage = () => {
         onDelete={handleDelete}
         onEdit={(post) => setEditingPost(post)}
       />
+
       {editingPost && (
         <EditPostModal
           show={!!editingPost}
