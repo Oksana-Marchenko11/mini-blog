@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Container, Button } from "react-bootstrap";
 import { Posts } from "../components/Posts";
-import { fetchAllPosts } from "../api/posts";
+import { fetchAllPosts } from "../services/postsApi";
 import { Link } from "react-router-dom";
 
 const HomePage = ({ isLoggedIn }) => {

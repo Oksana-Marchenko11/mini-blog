@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Posts } from "../components/Posts";
 import { EditPostModal } from "../components/EditPostModal";
 import { ReadPostModal } from "../components/ReadPostModal";
-import { fetchMyPosts, deleteMyPost, editMyPost } from "../api/posts";
+import { fetchMyPosts, deleteMyPost, editMyPost } from "../services/postsApi";
 import { NavLink } from "react-router-dom";
 
 const MyPostsPage = ({ isLoggedIn }) => {

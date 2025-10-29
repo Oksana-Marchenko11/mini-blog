@@ -1,27 +1,17 @@
 body {
   margin: 0;
-  /* прибирає дефолтні відступи браузера */
   padding: 0;
-  /* на всяк випадок */
   min-height: 100vh;
-  /* щоб тіло завжди було висотою вікна */
   display: flex;
-  /* flex-контейнер для центрирування */
   justify-content: center;
-  /* горизонтальне центрування */
   align-items: center;
-  /* вертикальне центрування */
-  /* background-color: #f4f275f9; */
-  /* фон сторінки */
   font-family: Arial, sans-serif;
-  /* шрифт за замовчуванням */
 }
 
 .app_root {
   width: 100%;
   min-height: 100vh;
   margin: 0 auto;
-  /* горизонтальне центрування */
   padding: 30px 15px;
   box-sizing: border-box;
 }
