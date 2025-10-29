@@ -10,7 +10,7 @@ export async function getAllUsersPosts(userId) {
   return posts;
 }
 export async function getAllPosts() {
-  const posts = await Post.find();
+  const posts = await Post.find().populate("author", "username");
   return posts;
 }
 
