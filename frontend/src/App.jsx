@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -21,7 +21,7 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Routes>
         <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} />} />
@@ -36,7 +36,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/create-post" element={<CreatePostPage />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
