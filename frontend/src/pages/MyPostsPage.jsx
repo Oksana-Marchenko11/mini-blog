@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { Posts } from "../components/Posts";
 import { EditPostModal } from "../components/EditPostModal";
+import { ReadPostModal } from "../components/ReadPostModal";
 import { fetchMyPosts, deleteMyPost, editMyPost } from "../api/posts";
+import { NavLink } from "react-router-dom";
 
-const MyPostsPage = () => {
+const MyPostsPage = ({ isLoggedIn }) => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState("");
   const [editingPost, setEditingPost] = useState(null);
+  const [readingPost, setReadingPost] = useState(null);
 
   const loadPosts = async () => {
     try {
@@ -50,26 +53,39 @@ const MyPostsPage = () => {
       setError(err.message);
     }
   };
-
   return (
-    <div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <Posts
-        posts={posts}
-        onDelete={handleDelete}
-        onEdit={(post) => setEditingPost(post)}
-      />
-
-      {editingPost && (
-        <EditPostModal
-          show={!!editingPost}
-          post={editingPost}
-          onHide={() => setEditingPost(null)}
-          onSave={handleEdit}
-        />
+    <>
+      {isLoggedIn ? (
+        <div>
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          <Posts
+            posts={posts}
+            onDelete={handleDelete}
+            onEdit={(post) => setEditingPost(post)}
+            onRead={(post) => setReadingPost(post)}
+          />
+          {editingPost && (
+            <EditPostModal
+              show={!!editingPost}
+              post={editingPost}
+              onHide={() => setEditingPost(null)}
+              onSave={handleEdit}
+            />
+          )}
+          {readingPost && (
+            <ReadPostModal
+              show={!!readingPost}
+              post={readingPost}
+              onHide={() => setReadingPost(null)}
+            />
+          )}
+        </div>
+      ) : (
+        <NavLink to="/login" className="btn btn-primary mt-4">
+          Увійти, щоб переглянути свої пости
+        </NavLink>
       )}
-    </div>
+    </>
   );
 };
-
 export default MyPostsPage;

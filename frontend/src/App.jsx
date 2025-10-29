@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
@@ -10,13 +10,25 @@ import "./App.css";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setIsLoggedIn(!!localStorage.getItem("token"));
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
 
   return (
     <BrowserRouter>
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/my-posts" element={<MyPostsPage />} />
+        <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} />} />
+        <Route
+          path="/my-posts"
+          element={<MyPostsPage isLoggedIn={isLoggedIn} />}
+        />
         <Route
           path="/login"
           element={<LoginPage setIsLoggedIn={setIsLoggedIn} />}

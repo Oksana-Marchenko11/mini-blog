@@ -51,3 +51,8 @@ export const editMyPost = async (id, data) => {
   });
   return res.json();
 };
+
+export const fetchOnePostById = async (id) => {
+  const res = await fetch(`${API_BASE}/api/posts/all-pots/${id}`);
+  return res.json();
+};

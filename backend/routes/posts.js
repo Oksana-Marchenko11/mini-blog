@@ -12,6 +12,7 @@ import { authMiddleware } from "../middleware/authMiddleware.js";
 const postRoutes = express.Router();
 
 postRoutes.get("/all-posts", getAllPostsController);
+postRoutes.get("/all-posts/:id", getPostByIdController);
 postRoutes.get("/my-posts", authMiddleware, getAllUsersPostsController);
 postRoutes.post("/my-posts", authMiddleware, createPostController);
 postRoutes.get("/my-posts/:id", authMiddleware, getPostByIdController);

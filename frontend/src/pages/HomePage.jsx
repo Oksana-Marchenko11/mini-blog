@@ -4,7 +4,7 @@ import { Posts } from "../components/Posts";
 import { fetchAllPosts } from "../api/posts";
 import { Link } from "react-router-dom";
 
-const HomePage = () => {
+const HomePage = ({ isLoggedIn }) => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState("");
 
@@ -26,14 +26,16 @@ const HomePage = () => {
       <p className="lead mb-4 text-center">
         Діліться своїми думками та ідеями з світом
       </p>
-      <div className="d-flex gap-3 justify-content-center flex-wrap">
-        <Link to="/register" className="btn btn-primary btn-lg">
-          Приєднатися
-        </Link>
-        <Link to="/login" className="btn btn-outline-primary btn-lg">
-          Увійти
-        </Link>
-      </div>
+      {!isLoggedIn && (
+        <div className="d-flex gap-3 justify-content-center flex-wrap">
+          <Link to="/register" className="btn btn-primary btn-lg">
+            Приєднатися
+          </Link>
+          <Link to="/login" className="btn btn-outline-primary btn-lg">
+            Увійти
+          </Link>
+        </div>
+      )}
       <div className="card shadow-sm mt-4">
         <div className="card-body p-4">
           <h2 className="text-center mb-4">Можливості MiniBlog</h2>
@@ -67,7 +69,7 @@ const HomePage = () => {
         </Button>
       </div>
       {error && <p style={{ color: "red" }}>{error}</p>}
-      <Posts posts={posts} />
+      {posts.length > 0 && <Posts posts={posts} />}
     </Container>
   );
 };
