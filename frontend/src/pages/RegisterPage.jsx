@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Container, Form, Button, Alert } from "react-bootstrap";
-import { API_BASE } from "../../config";
+import { API_BASE } from "../../config.js";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
