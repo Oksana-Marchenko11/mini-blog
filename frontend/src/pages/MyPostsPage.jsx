@@ -63,6 +63,7 @@ const MyPostsPage = ({ isLoggedIn }) => {
             onDelete={handleDelete}
             onEdit={(post) => setEditingPost(post)}
             onRead={(post) => setReadingPost(post)}
+            my="true"
           />
           {editingPost && (
             <EditPostModal

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ReadPostModal } from "./ReadPostModal";
 
-export const Posts = ({ posts, onDelete, onEdit }) => {
+export const Posts = ({ posts, onDelete, onEdit, my }) => {
   const [readingPost, setReadingPost] = useState(null);
   return (
     <div className="row">
@@ -18,9 +18,11 @@ export const Posts = ({ posts, onDelete, onEdit }) => {
                 </p>
                 <div className="post-meta mt-auto">
                   <div className="d-flex justify-content-between align-items-center text-muted small">
-                    <span>
-                      <strong>Автор:</strong> {post.author?.username}
-                    </span>
+                    {!my && (
+                      <span>
+                        <strong>Автор:</strong> {post.author?.username}
+                      </span>
+                    )}
                   </div>
                 </div>
 
