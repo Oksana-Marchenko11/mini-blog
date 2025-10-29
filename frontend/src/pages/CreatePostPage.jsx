@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import styles from "./CreatePostPage.module.css";
 import { Container, Form, Button, Alert } from "react-bootstrap";
-import { API_BASE } from "../../config.js";
+import { API_BASE } from "../config.js";
 
 const CreatePostPage = () => {
   const navigate = useNavigate();

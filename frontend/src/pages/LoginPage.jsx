@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Form, Button, Alert } from "react-bootstrap";
-import { API_BASE } from "../../config.js";
+import { API_BASE } from "../config.js";
 
 const LoginPage = ({ setIsLoggedIn }) => {
   const [error, setError] = useState(null);
