@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { API_BASE } from "../config.js";
+import { AuthContext } from "../AuthContext.jsx";
 
-const LoginPage = ({ setIsLoggedIn }) => {
+const LoginPage = () => {
   const [error, setError] = useState(null);
+  const { setIsLoggedIn } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();

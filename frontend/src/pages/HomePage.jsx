@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../AuthContext";
 import { Container, Button } from "react-bootstrap";
 import { Posts } from "../components/Posts";
 import { fetchAllPosts } from "../services/postsApi";
 import { Link } from "react-router-dom";
 
-const HomePage = ({ isLoggedIn }) => {
+const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState("");
+  const { isLoggedIn } = useContext(AuthContext);
 
   const loadPosts = async () => {
     try {

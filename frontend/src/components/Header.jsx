@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../AuthContext.jsx";
+
 import { Link } from "react-router-dom";
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import "./Header.css";
 import { jwtDecode } from "jwt-decode";
 
-export const Header = ({ isLoggedIn, setIsLoggedIn }) => {
+export const Header = () => {
   const [username, setUsername] = useState("");
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
   const checkLogin = () => {
     try {

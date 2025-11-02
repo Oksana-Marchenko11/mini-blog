@@ -1,15 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../AuthContext";
 import { Posts } from "../components/Posts";
 import { EditPostModal } from "../components/EditPostModal";
 import { ReadPostModal } from "../components/ReadPostModal";
 import { fetchMyPosts, deleteMyPost, editMyPost } from "../services/postsApi";
 import { NavLink } from "react-router-dom";
 
-const MyPostsPage = ({ isLoggedIn }) => {
+const MyPostsPage = () => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState("");
   const [editingPost, setEditingPost] = useState(null);
   const [readingPost, setReadingPost] = useState(null);
+  const { isLoggedIn } = useContext(AuthContext);
 
   const loadPosts = async () => {
     try {
