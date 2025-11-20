@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { API_BASE } from "../config.js";
+import BlogEditor from "../components/BlogEditor.jsx";
 
 const CreatePostPage = () => {
   const navigate = useNavigate();
@@ -57,17 +58,13 @@ const CreatePostPage = () => {
             required
           />
         </Form.Group>
+
         <Form.Group className="mb-3" controlId="formContent">
           <Form.Label>Текст поста</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={6}
-            placeholder="Введіть текст поста"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            required
-          />
+          {/* Заміна textarea на Tiptap редактор */}
+          <BlogEditor value={content} onChange={setContent} />
         </Form.Group>
+
         <Button variant="success" type="submit">
           Створити пост
         </Button>

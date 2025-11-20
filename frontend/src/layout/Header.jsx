@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../AuthContext.jsx";
+import { Outlet } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
@@ -31,6 +32,7 @@ export const Header = () => {
   };
 
   return (
+    <>
     <Navbar bg="primary" variant="dark" expand="lg" className="mb-4">
       <Container>
         <Navbar.Brand as={Link} to="/">
@@ -75,5 +77,7 @@ export const Header = () => {
         </Navbar.Collapse>
       </Container>
     </Navbar>
+    <Outlet />
+    </>
   );
 };

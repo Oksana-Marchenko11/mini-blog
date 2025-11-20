@@ -13,6 +13,17 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@mantine/core": "^8.3.7",
+    "@mantine/hooks": "^8.3.7",
+    "@mantine/tiptap": "^8.3.7",
+    "@tiptap/extension-color": "^3.10.7",
+    "@tiptap/extension-font-family": "^3.10.7",
+    "@tiptap/extension-image": "^3.10.7",
+    "@tiptap/extension-link": "^3.10.5",
+    "@tiptap/extension-text-style": "^3.10.7",
+    "@tiptap/pm": "^3.10.5",
+    "@tiptap/react": "^3.10.7",
+    "@tiptap/starter-kit": "^3.10.7",
     "bootstrap": "^5.3.8",
     "jwt-decode": "^4.0.0",
     "react": "^19.1.1",

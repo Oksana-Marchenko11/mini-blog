@@ -1,8 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../AuthContext";
 import { Posts } from "../components/Posts";
-import { EditPostModal } from "../components/EditPostModal";
-import { ReadPostModal } from "../components/ReadPostModal";
 import { fetchMyPosts, deleteMyPost, editMyPost } from "../services/postsApi";
 import { NavLink } from "react-router-dom";
 
@@ -67,22 +65,7 @@ const MyPostsPage = () => {
             onRead={(post) => setReadingPost(post)}
             my="true"
           />
-          {editingPost && (
-            <EditPostModal
-              show={!!editingPost}
-              post={editingPost}
-              onHide={() => setEditingPost(null)}
-              onSave={handleEdit}
-            />
-          )}
-          {readingPost && (
-            <ReadPostModal
-              show={!!readingPost}
-              post={readingPost}
-              onHide={() => setReadingPost(null)}
-            />
-          )}
-        </div>
+                 </div>
       ) : (
         <NavLink to="/login" className="btn btn-primary mt-4">
           Увійти, щоб переглянути свої пости

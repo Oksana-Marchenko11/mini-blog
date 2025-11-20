@@ -5,6 +5,9 @@ import { Posts } from "../components/Posts";
 import { fetchAllPosts } from "../services/postsApi";
 import { Link } from "react-router-dom";
 
+const a = fetchAllPosts();
+console.log(a);
+
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState("");
@@ -23,7 +26,7 @@ const HomePage = () => {
   return (
     <Container>
       <h1 className="display-4 mb-4 text-center">
-        Ласкаво просимо до MiniBlog
+        Ласкаво просимо до MiniBlog React розробників
       </h1>
       <p className="lead mb-4 text-center">
         Діліться своїми думками та ідеями з світом
@@ -46,20 +49,22 @@ const HomePage = () => {
             <div className="col-md-4 text-center">
               <h3 className="text-primary mb-3">✍️ Пишіть</h3>
               <p className="text-muted">
-                Створюйте та публікуйте свої пости легко та швидко
+                Створюйте та публікуйте свої пости легко та швидко. Головна тема
+                - розробка на React.
               </p>
             </div>
 
             <div className="col-md-4 text-center">
               <h3 className="text-primary mb-3">👥 Діліться</h3>
               <p className="text-muted">
-                Поширюйте свої ідеї та знаходьте однодумців
+                Поширюйте свої ідеї, знаходьте однодумців, допомагайте один
+                одному.
               </p>
             </div>
             <div className="col-md-4 text-center">
               <h3 className="text-primary mb-3">🔒 Безпека</h3>
               <p className="text-muted">
-                Ваші дані захищені надійною системою аутентифікації
+                Ваші дані захищені надійною системою аутентифікації.
               </p>
             </div>
           </div>
