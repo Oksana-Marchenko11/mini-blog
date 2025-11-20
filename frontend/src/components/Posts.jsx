@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export const Posts = ({ posts, onDelete, onEdit, my }) => {
+export const Posts = ({ posts,onRead, onDelete, onEdit, my }) => {
     return (
     <div className="row">
       {posts && posts.length > 0 ? (
@@ -30,7 +30,8 @@ export const Posts = ({ posts, onDelete, onEdit, my }) => {
                 </div>
 
                 <div className="mt-3 d-flex gap-2">
-                 <Link className="btn btn-primary btn-sm" to={`/post/${post._id}`}>Читати повністю</Link>
+                  {onRead &&
+                 <Link className="btn btn-primary btn-sm" to={`/post/${post._id}`}>Читати повністю</Link>}
                                   {onEdit && (
                     <button
                       className="btn btn-warning btn-sm"

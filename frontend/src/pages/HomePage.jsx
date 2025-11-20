@@ -3,6 +3,7 @@ import { AuthContext } from "../AuthContext";
 import { Container, Button } from "react-bootstrap";
 import { Posts } from "../components/Posts";
 import { fetchAllPosts } from "../services/postsApi";
+
 import { Link } from "react-router-dom";
 
 const a = fetchAllPosts();
@@ -76,7 +77,7 @@ const HomePage = () => {
         </Button>
       </div>
       {error && <p style={{ color: "red" }}>{error}</p>}
-      {posts.length > 0 && <Posts posts={posts} />}
+      {posts.length > 0 && <Posts onRead={true} posts={posts} />}
     </Container>
   );
 };

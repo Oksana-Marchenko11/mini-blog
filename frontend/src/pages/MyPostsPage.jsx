@@ -7,8 +7,6 @@ import { NavLink } from "react-router-dom";
 const MyPostsPage = () => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState("");
-  const [editingPost, setEditingPost] = useState(null);
-  const [readingPost, setReadingPost] = useState(null);
   const { isLoggedIn } = useContext(AuthContext);
 
   const loadPosts = async () => {
@@ -47,8 +45,6 @@ const MyPostsPage = () => {
             : p
         )
       );
-
-      setEditingPost(null);
     } catch (err) {
       setError(err.message);
     }
@@ -61,8 +57,8 @@ const MyPostsPage = () => {
           <Posts
             posts={posts}
             onDelete={handleDelete}
-            onEdit={(post) => setEditingPost(post)}
-            onRead={(post) => setReadingPost(post)}
+            onEdit={handleEdit}
+            onRead={true}
             my="true"
           />
                  </div>
