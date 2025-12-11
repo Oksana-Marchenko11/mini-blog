@@ -77,7 +77,7 @@ const HomePage = () => {
         </Button>
       </div>
       {error && <p style={{ color: "red" }}>{error}</p>}
-      {posts.length > 0 && <Posts onRead={true} posts={posts} />}
+      {posts.length > 0 && <Posts onRead={true} posts={posts}/>}
     </Container>
   );
 };

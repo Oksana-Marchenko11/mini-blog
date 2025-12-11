@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export const Posts = ({ posts,onRead, onDelete, onEdit, my }) => {
+export const Posts = ({ posts,onRead,onDelete,onEdit, my }) => {
     return (
     <div className="row">
       {posts && posts.length > 0 ? (
@@ -21,7 +21,7 @@ export const Posts = ({ posts,onRead, onDelete, onEdit, my }) => {
 />
                 <div className="post-meta mt-auto">
                   <div className="d-flex justify-content-between align-items-center text-muted small">
-                    {!my && (
+                    {my? <></> : (
                       <span>
                         <strong>Автор:</strong> {post.author?.username}
                       </span>
@@ -31,7 +31,7 @@ export const Posts = ({ posts,onRead, onDelete, onEdit, my }) => {
 
                 <div className="mt-3 d-flex gap-2">
                   {onRead &&
-                 <Link className="btn btn-primary btn-sm" to={`/post/${post._id}`}>Читати повністю</Link>}
+                 <Link className="btn btn-primary btn-sm" to={`/post/${post._id}`} state={{my : !!my}}>Читати повністю</Link>}
                                   {onEdit && (
                     <button
                       className="btn btn-warning btn-sm"

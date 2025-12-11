@@ -1,11 +1,15 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../AuthContext";
 import { Posts } from "../components/Posts";
+import BlogEditor from "../components/BlogEditor";
 import { fetchMyPosts, deleteMyPost, editMyPost } from "../services/postsApi";
 import { NavLink } from "react-router-dom";
 
 const MyPostsPage = () => {
   const [posts, setPosts] = useState([]);
+  const [editingPost, setEditingPost] = useState(null);
+  const [editedContent, setEditedContent] = useState("");
+  const [editedTitle, setEditedTitle] = useState("");
   const [error, setError] = useState("");
   const { isLoggedIn } = useContext(AuthContext);
 
@@ -22,6 +26,12 @@ const MyPostsPage = () => {
     loadPosts();
   }, []);
 
+  const openEditModal = (post) => {
+    setEditingPost(post);
+    setEditedTitle(post.title);
+    setEditedContent(post.content);
+  };
+
   const handleDelete = async (id) => {
     try {
       await deleteMyPost(id);
@@ -31,37 +41,72 @@ const MyPostsPage = () => {
     }
   };
 
-  const handleEdit = async (updatedPost) => {
+
+  const saveEdit = async () => {
     try {
-      await editMyPost(updatedPost._id, {
-        title: updatedPost.title,
-        content: updatedPost.content,
+      await editMyPost(editingPost._id, {
+        title: editedTitle,
+        content: editedContent,
       });
 
       setPosts((prev) =>
         prev.map((p) =>
-          p._id === updatedPost._id
-            ? { ...p, title: updatedPost.title, content: updatedPost.content }
+          p._id === editingPost._id
+            ? { ...p, title: editedTitle, content: editedContent }
             : p
         )
       );
+
+      setEditingPost(null);
     } catch (err) {
       setError(err.message);
     }
   };
+
   return (
     <>
       {isLoggedIn ? (
-        <div>
+        <>
           {error && <p style={{ color: "red" }}>{error}</p>}
+
           <Posts
             posts={posts}
             onDelete={handleDelete}
-            onEdit={handleEdit}
+            onEdit={openEditModal}
             onRead={true}
-            my="true"
+            my
           />
-                 </div>
+            {editingPost && (
+            <div className="modal-backdrop">
+              <div className="modal-window">
+                <h3>Редагувати пост</h3>
+
+                <input
+                  type="text"
+                  className="form-control mb-2"
+                  value={editedTitle}
+                  onChange={(e) => setEditedTitle(e.target.value)}
+                />
+
+                <BlogEditor
+                  value={editedContent}
+                  onChange={(html) => setEditedContent(html)}
+                />
+
+                <button className="btn btn-primary mt-3" onClick={saveEdit}>
+                  Зберегти
+                </button>
+
+                <button
+                  className="btn btn-secondary mt-2"
+                  onClick={() => setEditingPost(null)}
+                >
+                  Скасувати
+                </button>
+              </div>
+            </div>
+          )}
+        </>
       ) : (
         <NavLink to="/login" className="btn btn-primary mt-4">
           Увійти, щоб переглянути свої пости
@@ -70,4 +115,5 @@ const MyPostsPage = () => {
     </>
   );
 };
+
 export default MyPostsPage;
