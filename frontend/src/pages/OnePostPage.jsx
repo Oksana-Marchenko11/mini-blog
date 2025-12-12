@@ -62,15 +62,16 @@ const saveEdit = async () => {
               setEditing(p);
               setEditedTitle(p.title);
               setEditedContent(p.content);
-            }}
+                          }}
             onDelete={async (id) => {
               try {
                 await fetch(`${API_BASE}/api/posts/${id}`, { method: "DELETE" });
-                setPost(null); 
+                setPost(null);
               } catch (err) {
                 setError(err.message);
               }
             }}
+            fullText={true}
           />
 
           {editing && (
@@ -102,7 +103,7 @@ const saveEdit = async () => {
         </div>
       ) : (
         <div>
-          <Posts posts={[post]} />
+          <Posts posts={[post]} fullText={true}/>
         </div>
       )}
     </div>

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
-export const Posts = ({ posts,onRead,onDelete,onEdit, my }) => {
+export const Posts = ({ posts,onRead,onDelete,onEdit, my, fullText }) => {
+  console.log(posts);
     return (
     <div className="row">
       {posts && posts.length > 0 ? (
@@ -14,6 +15,7 @@ export const Posts = ({ posts,onRead,onDelete,onEdit, my }) => {
   className="card-text post-content flex-grow-1"
   dangerouslySetInnerHTML={{
     __html:
+    fullText? post.content :
       post.content.length > 200
         ? `${post.content.substring(0, 200)}...`
         : post.content,
