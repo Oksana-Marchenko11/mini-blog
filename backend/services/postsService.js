@@ -15,7 +15,7 @@ export async function getAllPosts() {
 }
 
 export async function getPostById(postId) {
-  const onePost = await Post.findById(postId);
+  const onePost = await Post.findById(postId).populate("author", "username");;
   return onePost;
 }
 

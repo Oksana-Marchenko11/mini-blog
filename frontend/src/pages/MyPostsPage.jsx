@@ -74,7 +74,7 @@ const MyPostsPage = () => {
             onDelete={handleDelete}
             onEdit={openEditModal}
             onRead={true}
-            my
+            my={true}
           />
             {editingPost && (
             <div className="modal-backdrop">

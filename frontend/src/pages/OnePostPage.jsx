@@ -72,7 +72,8 @@ const saveEdit = async () => {
               }
             }}
             fullText={true}
-          />
+            my={location.state.my}
+                     />
 
           {editing && (
             <div className="edit-section mt-3">
