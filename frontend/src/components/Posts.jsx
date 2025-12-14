@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-export const Posts = ({ posts,onRead,onDelete,onEdit, my, fullText }) => {
-  console.log(posts);
-    return (
+export const Posts = ({ posts, onRead, onDelete, onEdit, my, fullText }) => {
+  const navigate = useNavigate();
+  return (
     <div className="row">
       {posts && posts.length > 0 ? (
         posts.map((post) => (
@@ -11,19 +11,19 @@ export const Posts = ({ posts,onRead,onDelete,onEdit, my, fullText }) => {
               <div className="card-body d-flex flex-column">
                 <h5 className="card-title post-title">{post.title}</h5>
                 {/* <p className="card-text post-content flex-grow-1"> */}
-             <p
-  className="card-text post-content flex-grow-1"
-  dangerouslySetInnerHTML={{
-    __html:
-    fullText? post.content :
-      post.content.length > 200
-        ? `${post.content.substring(0, 200)}...`
-        : post.content,
-  }}
-/>
+                <p
+                  className="card-text post-content flex-grow-1"
+                  dangerouslySetInnerHTML={{
+                    __html: fullText
+                      ? post.content
+                      : post.content.length > 400
+                        ? `${post.content.substring(0, 400)}...`
+                        : post.content,
+                  }}
+                />
                 <div className="post-meta mt-auto">
                   <div className="d-flex justify-content-between align-items-center text-muted small">
-                    {my? <></> : (
+                    {!my && (
                       <span>
                         <strong>Автор:</strong> {post.author?.username}
                       </span>
@@ -32,9 +32,16 @@ export const Posts = ({ posts,onRead,onDelete,onEdit, my, fullText }) => {
                 </div>
 
                 <div className="mt-3 d-flex gap-2">
-                  {onRead &&
-                 <Link className="btn btn-primary btn-sm" to={`/post/${post._id}`} state={{my : !!my}}>Читати повністю</Link>}
-                                  {onEdit && (
+                  {onRead && (
+                    <Link
+                      className="btn btn-primary btn-sm"
+                      to={`/post/${post._id}`}
+                      state={{ my: !!my }}
+                    >
+                      Читати повністю
+                    </Link>
+                  )}
+                  {onEdit && (
                     <button
                       className="btn btn-warning btn-sm"
                       onClick={() => onEdit(post)}
@@ -51,6 +58,14 @@ export const Posts = ({ posts,onRead,onDelete,onEdit, my, fullText }) => {
                       Видалити
                     </button>
                   )}
+                  {fullText && (
+                    <button
+                      className="btn btn-primary btn-sm"
+                      onClick={() => navigate(-1)}
+                    >
+                      ← Повернутися
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -59,6 +74,6 @@ export const Posts = ({ posts,onRead,onDelete,onEdit, my, fullText }) => {
       ) : (
         <p>Поки що немає постів</p>
       )}
-         </div>
+    </div>
   );
 };

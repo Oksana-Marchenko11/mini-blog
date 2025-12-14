@@ -1,18 +1,27 @@
-# React + Vite
+Як все працює:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Компонент Posts:
 
-Currently, two official plugins are available:
+- приймає пости(posts), фунції для роботи з ними, ідентифікатор чи це мій пост(my), і індетифікатор чи показувати пост цілком(fullText);
+- Проходиться методом map по усіх постах і повертає готовий компонент поста.
+- Якщо !my то тоді показуємо автора поста.
+- Якщо fullText показує весь контент; Віповідно зі сторінки OnePostPage передаємо цей параметр true.
+- В іншому випадку показуємо перші 400 символів.
+- Кнопка "Читати повністю": замаскований Link(з React-Router-Dom) по якому перехід на сторінку OnePostPage; зявляється якщо прийшов onRead в props. Передаю prop state зі значенням my = true або false, щоб сторінка OnePostPage знала чи мій це пост і відповідно містила чи ні кнопки Delete, Edit.
+- Кпопки "Edit, Delete": зявляються якщо прийшли onEdit і onDelete в props. І нажимаючи на ці кнопки ми й викликаємо ці функції передаючи їм відповідні аргументи.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Сторінка MyPostsPage:
 
-## React Compiler
+- Загружаємо всі мої пости і передаємо в стейт posts
+- перевіряємо чи є логін
+- викликаємо компонет Post і передаємо posts, функції onDelete, onEdit і onRead, my = true
+- коли нажимають на редагувати пост, то запускається функція в яку саме передається цей пост і яка записує в стейт editingPost, title, content.
+- якщо є editingPost, title, content, то відкривається модалка з цими даними і при зміні перезаписує їх. Тут для контенту використовуємо компонет BlogEditor
 
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Сторінка OnePostPage:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-
-
+- отримує id поста const { id } = useParams();
+- загружаємо цей пост з бази даних і записуємо в стейт post;
+- при onEdit записуємо дані поста в стейт editing, editedTitle, setEditedTitle;
+- коли є editing відкривається не модалка, а div, який отримує дані зі стейтів і при зміні перезаписує їх.
+- при натискані кнопки зберегти дані летять на сервер

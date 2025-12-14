@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Posts } from "../components/Posts";
 import BlogEditor from "../components/BlogEditor";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { API_BASE } from "../config";
 import { editMyPost } from "../services/postsApi";
 
@@ -15,16 +15,15 @@ const OnePostsPage = () => {
 
   const { id } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadPost = async () => {
       try {
         const res = await fetch(`${API_BASE}/api/posts/all-posts/${id}`);
-        if (!res.ok) throw new Error("not possible to download posts");
+        if (!res.ok) throw new Error("Не вдалося завантажити пост");
         const data = await res.json();
         setPost(data);
-        setEditedTitle(data.title);
-        setEditedContent(data.content);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -39,19 +38,20 @@ const OnePostsPage = () => {
   if (error) return <p style={{ color: "red" }}>{error}</p>;
   if (!post) return null;
 
-const saveEdit = async () => {
-  try {
-    const updatedPost = await editMyPost(editing._id, {
-      title: editedTitle,
-      content: editedContent,
-    });
+  const saveEdit = async () => {
+    try {
+      const updatedPost = await editMyPost(editing._id, {
+        title: editedTitle,
+        content: editedContent,
+      });
 
-    setPost(updatedPost);
-    setEditing(null);
-  } catch (err) {
-    setError(err.message);
-  }
-};
+      setPost(updatedPost);
+      setEditing(null);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <div className="container mt-4">
       {location.state?.my ? (
@@ -62,10 +62,12 @@ const saveEdit = async () => {
               setEditing(p);
               setEditedTitle(p.title);
               setEditedContent(p.content);
-                          }}
+            }}
             onDelete={async (id) => {
               try {
-                await fetch(`${API_BASE}/api/posts/${id}`, { method: "DELETE" });
+                await fetch(`${API_BASE}/api/posts/${id}`, {
+                  method: "DELETE",
+                });
                 setPost(null);
               } catch (err) {
                 setError(err.message);
@@ -73,7 +75,7 @@ const saveEdit = async () => {
             }}
             fullText={true}
             my={location.state.my}
-                     />
+          />
 
           {editing && (
             <div className="edit-section mt-3">
@@ -90,10 +92,13 @@ const saveEdit = async () => {
               />
 
               <div className="mt-2 d-flex gap-2">
-                <button className="btn btn-primary" onClick={saveEdit}>
+                <button className="btn btn-success" onClick={saveEdit}>
                   Зберегти
                 </button>
-                <button className="btn btn-secondary" onClick={() => setEditing(false)}>
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => setEditing(null)}
+                >
                   Скасувати
                 </button>
               </div>
@@ -104,7 +109,7 @@ const saveEdit = async () => {
         </div>
       ) : (
         <div>
-          <Posts posts={[post]} fullText={true}/>
+          <Posts posts={[post]} fullText={true} />
         </div>
       )}
     </div>

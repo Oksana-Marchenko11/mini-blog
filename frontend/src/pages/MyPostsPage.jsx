@@ -41,7 +41,6 @@ const MyPostsPage = () => {
     }
   };
 
-
   const saveEdit = async () => {
     try {
       await editMyPost(editingPost._id, {
@@ -53,8 +52,8 @@ const MyPostsPage = () => {
         prev.map((p) =>
           p._id === editingPost._id
             ? { ...p, title: editedTitle, content: editedContent }
-            : p
-        )
+            : p,
+        ),
       );
 
       setEditingPost(null);
@@ -76,34 +75,34 @@ const MyPostsPage = () => {
             onRead={true}
             my={true}
           />
-            {editingPost && (
-            <div className="modal-backdrop">
-              <div className="modal-window">
-                <h3>Редагувати пост</h3>
+          {editingPost && (
+            <div className="edit-section mt-3 p-3 border rounded bg-light">
+              <input
+                type="text"
+                className="form-control mb-3"
+                value={editedTitle}
+                onChange={(e) => setEditedTitle(e.target.value)}
+                placeholder="Заголовок поста"
+              />
 
-                <input
-                  type="text"
-                  className="form-control mb-2"
-                  value={editedTitle}
-                  onChange={(e) => setEditedTitle(e.target.value)}
-                />
+              <BlogEditor
+                value={editedContent}
+                onChange={(html) => setEditedContent(html)}
+              />
 
-                <BlogEditor
-                  value={editedContent}
-                  onChange={(html) => setEditedContent(html)}
-                />
-
-                <button className="btn btn-primary mt-3" onClick={saveEdit}>
+              <div className="mt-3 d-flex gap-2">
+                <button className="btn btn-success" onClick={saveEdit}>
                   Зберегти
                 </button>
-
                 <button
-                  className="btn btn-secondary mt-2"
+                  className="btn btn-secondary"
                   onClick={() => setEditingPost(null)}
                 >
                   Скасувати
                 </button>
               </div>
+
+              {error && <p className="text-danger mt-2">{error}</p>}
             </div>
           )}
         </>
