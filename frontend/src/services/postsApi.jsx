@@ -41,6 +41,7 @@ export const fetchMyPosts = async () => {
 
 export const editMyPost = async (id, data) => {
   const token = localStorage.getItem("token");
+
   const res = await fetch(`${API_BASE}/api/posts/my-posts/${id}`, {
     method: "PATCH",
     headers: {
@@ -49,10 +50,15 @@ export const editMyPost = async (id, data) => {
     },
     body: JSON.stringify(data),
   });
+
+  if (!res.ok) {
+    throw new Error(`Edit failed: ${res.status}`);
+  }
+
   return res.json();
 };
 
 export const fetchOnePostById = async (id) => {
-  const res = await fetch(`${API_BASE}/api/posts/all-pots/${id}`);
+  const res = await fetch(`${API_BASE}/api/posts/all-posts/${id}`);
   return res.json();
 };

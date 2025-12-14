@@ -15,7 +15,7 @@ export async function getAllPosts() {
 }
 
 export async function getPostById(postId) {
-  const onePost = await Post.findById(postId).populate("author", "username");;
+  const onePost = await Post.findById(postId).populate("author", "username");
   return onePost;
 }
 
@@ -24,6 +24,10 @@ export async function deleteById(postId) {
   return deletedPost;
 }
 export const editMyPost = async (id, data) => {
-  // findByIdAndUpdate з {new: true} поверне оновлений документ
-  return await Post.findByIdAndUpdate(id, data, { new: true });
+  const updatedPost = await Post.findByIdAndUpdate(
+    id,
+    { $set: data },
+    { new: true }
+  );
+  return updatedPost;
 };

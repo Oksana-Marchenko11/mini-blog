@@ -17,6 +17,8 @@ const MyPostsPage = () => {
     try {
       const data = await fetchMyPosts();
       setPosts(data);
+      // setEditedContent(data.content);
+      // setEditedTitle(data.title);
     } catch (err) {
       setError(err.message);
     }
@@ -42,12 +44,14 @@ const MyPostsPage = () => {
   };
 
   const saveEdit = async () => {
+    console.log(editingPost._id);
+    console.log(editedTitle);
+
     try {
       await editMyPost(editingPost._id, {
         title: editedTitle,
         content: editedContent,
       });
-
       setPosts((prev) =>
         prev.map((p) =>
           p._id === editingPost._id

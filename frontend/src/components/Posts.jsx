@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export const Posts = ({ posts, onRead, onDelete, onEdit, my, fullText }) => {
   const navigate = useNavigate();
+  console.log(posts);
   return (
     <div className="row">
       {posts && posts.length > 0 ? (
