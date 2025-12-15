@@ -73,7 +73,10 @@ export async function updatePostByIdController(req, res) {
 
     const post = await getPostById(id);
     if (!post) return res.status(404).json({ error: "Post not found" });
-    if (post.author.toString() !== req.user._id.toString()) {
+    console.log("1:", req.user._id.toString());
+    console.log("2:", post.author.toString());
+
+    if (post.author._id.toString() !== req.user._id.toString()) {
       return res.status(403).json({ error: "Not authorized" });
     }
 
